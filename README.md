@@ -1,184 +1,117 @@
-# Phara - Multi-AI Chatbot
+# Nexus6 Health Data & Multi-AI Chatbot
 
-Phara is a flexible AI-powered chatbot that supports multiple AI providers, making it easy to switch between different chat AI models.
+## Mission
+Provide a flexible, chatbot-style service for exploring and generating synthetic healthcare datasets. The system combines multi-model AI support with privacy-safe data synthesis, enabling experimentation across different providers while ensuring sensitive data is protected.
 
-## Features
+## Project Overview
+Nexus6 is designed to:
+- Ingest messy, inconsistent healthcare data
+- Infer schema and distributions
+- Detect and mask PII/PHI
+- Generate trustworthy synthetic datasets
+- Allow users to interact via a chatbot powered by multiple AI providers
 
-- **Multi-AI Support**: Switch between Gemini, OpenAI, Anthropic Claude, and Ollama
-- **Easy Model Switching**: Change AI models with simple commands
-- **Hardcoded API Keys**: Quick setup for development and testing
-- **Conversation History**: Maintains context across conversations
-- **Command System**: Built-in commands for model management
+The result: a development-friendly tool to simulate realistic healthcare datasets without compromising privacy.
 
-## Supported AI Providers
+---
 
-- **Google Gemini** (gemini-pro) - Default
-- **OpenAI** (gpt-3.5-turbo)
-- **Anthropic Claude** (claude-3-sonnet-20240229)
-- **Ollama** (llama2) - Local AI models
+## Core Features
 
-## Quick Setup
+### Synthetic Data Pipeline
+- Zip file upload/download
+- Schema inference with JSON output
+- PII/PHI detection and masking
+- Distribution-matching synthetic generation
+- Statistical validation suite
+- Deterministic reproducibility
 
-### 1. Install Dependencies
+### Chatbot Capabilities
+- Multi-AI support: Google Gemini, OpenAI GPT, Anthropic Claude, Ollama (local)
+- Simple runtime model switching (`model switch openai`, etc.)
+- Conversation history and context management
+- Built-in commands for model and session management
+- Modular architecture for adding new providers
 
-```bash
-pip install -e .
-```
+### Stretch Capabilities (Planned)
+- Differential privacy integration
+- Anomaly simulation
+- Synthetic free-text generation
+- Active schema editor
 
-### 2. Configure API Keys
+---
 
-Edit `config.py` and add your API keys:
+## Tech Stack
+- **Frontend**: React.js with TypeScript (chat UI, file upload, report view)  
+- **Backend**: Node.js with Express (API routes, file handling, session management)  
+- **Data Pipeline**: Python with pandas, numpy (schema inference, privacy detection, synthesis)  
+- **Synthetic Data Generation**: dbtwin API  
+- **Chatbot Framework**: Modular system supporting multiple AI providers  
+- **Database**: SQLite (session management)  
+- **File Handling**: multer (uploads/downloads)  
 
-```python
-API_KEYS = {
-    AIProvider.GEMINI: "your-gemini-api-key-here",
-    AIProvider.OPENAI: "your-openai-api-key-here",
-    AIProvider.ANTHROPIC: "your-anthropic-api-key-here",
-    AIProvider.OLLAMA: None,  # No API key needed for local Ollama
-}
-```
-
-### 3. Switch Default Model (Optional)
-
-In `config.py`, change the active model:
-
-```python
-# Change this line to switch default model
-ACTIVE_MODEL = AIProvider.OPENAI  # or ANTHROPIC, OLLAMA
-```
-
-### 4. Run Phara
-
-```bash
-python main.py
-```
-
-## Usage
-
-### Basic Chat
-Just type your message and press Enter:
-```
-You: Hello, how are you?
-Phara: Hello! I'm doing well, thank you for asking...
-```
-
-### Model Commands
-
-- `model` - Show current AI model information
-- `model list` - Show all available AI models
-- `model switch gemini` - Switch to Gemini AI
-- `model switch openai` - Switch to OpenAI GPT
-- `model switch anthropic` - Switch to Anthropic Claude
-- `model switch ollama` - Switch to Ollama (local)
-
-### Other Commands
-
-- `help` - Show all available commands
-- `clear` - Clear conversation history
-- `history` - Show recent conversation history
-- `quit` - Exit the chatbot
+---
 
 ## Architecture
-
-The new modular architecture consists of:
-
-### Core Files
-
-- `main.py` - Main application orchestrator
-- `brain.py` - AI processing logic (now provider-agnostic)
-- `config.py` - Configuration and API key management
-- `ai_providers.py` - AI provider implementations
-- `read.py` - User input handling
-- `voice.py` - Output formatting and display
-
-### Configuration System
-
-The `Config` class in `config.py` manages:
-- Active AI model selection
-- API key storage
-- Model-specific parameters (temperature, max_tokens, etc.)
-- Easy model switching
-
-### AI Provider System
-
-The `ai_providers.py` module provides:
-- Abstract base class for all AI providers
-- Unified interface for different AI services
-- Factory pattern for provider creation
-- Individual implementations for each AI service
-
-## Adding New AI Providers
-
-To add a new AI provider:
-
-1. Create a new provider class in `ai_providers.py` inheriting from `BaseAIProvider`
-2. Implement the required methods: `initialize()` and `generate_response()`
-3. Add the provider to the `AIProvider` enum in `config.py`
-4. Add configuration in `Config.MODEL_CONFIGS`
-5. Register the provider in `AIProviderFactory._providers`
-
-## Model Switching Examples
-
-### Runtime Switching
 ```
-You: model list
-ℹ️  Available AI Models:
-ℹ️    ✓ gemini: gemini-pro
-ℹ️    ✗ openai: gpt-3.5-turbo
-ℹ️    ✗ anthropic: claude-3-sonnet-20240229
-ℹ️    ✗ ollama: llama2
-
-You: model switch openai
-✅ Switched to openai model: gpt-3.5-turbo
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│   Frontend      │    │    Backend       │    │  Data Pipeline  │
+│   (React)       │◄──►│   (Node.js)      │◄──►│   (Python)      │
+│                 │    │                  │    │                 │
+│ - Chat Interface│    │ - API Routes     │    │ - Schema Infer  │
+│ - File Upload   │    │ - File Handling  │    │ - PII Detection │
+│ - Reports View  │    │ - Session Mgmt   │    │ - Synthesis     │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+                                │
+                                ▼
+                       ┌──────────────────┐
+                       │  External APIs   │
+                       │                  │
+                       │ - Listening Post │
+                       │ - dbtwin API     │
+                       └──────────────────┘
 ```
 
-### Configuration-based Switching
-Edit `config.py`:
-```python
-# Switch default model
-ACTIVE_MODEL = AIProvider.ANTHROPIC
+---
+
+## Getting Started
+
+### Prerequisites
+- Node.js 18+  
+- Python 3.9+  
+- npm or yarn  
+- API keys for AI providers (optional for Ollama/local)  
+
+### Installation
+```
+# Clone repository
+git clone <repository-url>
+cd nexus6
+
+# Install dependencies
+npm install
+pip install -r requirements.txt
+
+# Configure API keys
+cp config.example.py config.py
+# edit config.py with your keys
+
+# Start dev servers
+npm run dev
 ```
 
-## API Key Management
+## API Documentation
+See `docs/API.md` for endpoint specifications.
 
-### Method 1: Hardcoded (Quick Development)
-Edit `config.py`:
-```python
-API_KEYS = {
-    AIProvider.GEMINI: "AIzaSyByf5QsEjWIPK3-xOfI9kIBSQUTvdiCGVs",
-    AIProvider.OPENAI: "sk-your-openai-key-here",
-    # ...
-}
-```
+## Contributing
+This is a hackathon project. See `CONTRIBUTING.md` for development guidelines.
 
-### Method 2: Environment Variables (Production)
-The system still supports `.env` files, but the hardcoded approach in `config.py` takes precedence for quick programming.
+## License
+MIT License - see LICENSE file for details.
 
-## Dependencies
-
-- `google-generativeai>=0.3.0` - For Gemini AI
-- `openai>=1.0.0` - For OpenAI GPT models
-- `anthropic>=0.7.0` - For Anthropic Claude
-- `requests>=2.28.0` - For Ollama HTTP API
-- `python-dotenv>=1.0.0` - For environment variables
-
-## Error Handling
-
-The system gracefully handles:
-- Missing API keys
-- Network connectivity issues
-- Invalid model configurations
-- Provider-specific errors
-
-Each provider includes proper error handling and fallback messages.
-
-## Local AI with Ollama
-
-To use Ollama (local AI):
-
-1. Install Ollama: https://ollama.ai/
-2. Pull a model: `ollama pull llama2`
-3. Switch to Ollama: `model switch ollama`
-
-No API key required for local models!
-# Nexus6HealthCareDataGenerator
+## Contributors
+- [Thang Hua](https://www.linkedin.com/in/thanghua20/) – Full-stack/System Design  
+- [Aidan Martin](https://www.linkedin.com/in/aidanjmartin/) – Algorithmic Architect  
+- [Hernan Hernandez](https://www.linkedin.com/in/hernan-hernandez-4a796328a/) – UX  
+- [Gabrielle Miller](https://www.linkedin.com/in/gabrielle-miller-mtsu/) – Frontend Styling  
+- [Carol Li](https://www.linkedin.com/in/carol-li-217664326/) – Machine Learning Theory  
+- [Brady Reed](https://www.linkedin.com/in/brady-reed/) – Prompt/Framework Engineering

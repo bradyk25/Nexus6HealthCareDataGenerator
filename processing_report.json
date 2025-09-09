@@ -1,0 +1,63 @@
+{
+  "job_id": "da589b75-ef9d-411b-ad62-27b6bc54aa60",
+  "filename": "hackathon_dataset.xlsx",
+  "workflow_steps": [
+    "Original data extraction",
+    "Data cleaning and splitting",
+    "Aiden branch enhancement (claims)",
+    "DBTwin synthetic generation",
+    "Final file generation"
+  ],
+  "original_data_count": 51,
+  "cleaned_data_count": 51,
+  "final_claims_count": 1000,
+  "final_demographics_count": 20,
+  "pii_detected": {
+    "CLAIM_ID": {
+      "type": "claim_identifier",
+      "confidence": 0.95
+    },
+    "MEMBER_ID": {
+      "type": "member_identifier",
+      "confidence": 0.95
+    },
+    "ID": {
+      "type": "patient_identifier",
+      "confidence": 0.95
+    },
+    "LAST_NAME": {
+      "type": "person_name",
+      "confidence": 0.98
+    },
+    "AGE": {
+      "type": "age",
+      "confidence": 0.9
+    },
+    "PROVIDER_ZIP": {
+      "type": "location",
+      "confidence": 0.85
+    }
+  },
+  "phi_detected": {
+    "DIAGNOSIS_CODE": {
+      "type": "medical_diagnosis",
+      "confidence": 0.95
+    },
+    "PROCEDURE_CODE": {
+      "type": "medical_procedure",
+      "confidence": 0.9
+    },
+    "DRG_CODE": {
+      "type": "medical_classification",
+      "confidence": 0.85
+    },
+    "ICD9_PROCEDURE": {
+      "type": "medical_procedure",
+      "confidence": 0.9
+    }
+  },
+  "synthetic_mode": true,
+  "synthetic_rows_requested": 1000,
+  "processed_at": "2025-09-07T15:48:01.697939",
+  "workflow_completed": true
+}

@@ -1,0 +1,26 @@
+{
+  "cms_provider_data": {
+    "provider_specialties": {},
+    "procedure_frequencies": {},
+    "geographic_distributions": {},
+    "payment_patterns": {}
+  },
+  "cdc_health_stats": {
+    "disease_prevalence": {},
+    "demographic_patterns": {},
+    "seasonal_trends": {},
+    "mortality_patterns": {}
+  },
+  "hhs_facility_data": {
+    "facility_types": {},
+    "geographic_coverage": {},
+    "service_offerings": {},
+    "capacity_patterns": {}
+  },
+  "medicare_specialty_data": {
+    "specialty_drug_patterns": {},
+    "cost_distributions": {},
+    "utilization_patterns": {},
+    "provider_patterns": {}
+  }
+}
